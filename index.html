@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Greater Masaka | Home</title>
+    
+    <link rel="icon" type="image/png" href="GRM.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --gold: #FFD600;
+            --dark: #1E3A2F;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            color: #333; 
+        }
+
+        nav {
+            background: var(--primary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { 
+            height: 75px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            object-fit: contain;
+            background: white;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        .hero {
+            min-height: 100vh;
+            height: auto;
+            background: url('sun1.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 140px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 5px;
+            text-shadow: 0 6px 20px rgba(0,0,0,0.8);
+            line-height: 1.1;
+        }
+        .hero-subtitle {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 6px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            line-height: 1.2;
+        }
+        .hero-tagline {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 35px;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.7);
+        }
+
+        .hero-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 10px solid rgba(27, 94, 32, 0.85);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+            object-fit: contain;
+            background: white;
+            padding: 12px;
+            margin: 10px auto 20px;
+        }
+
+        section { padding: 100px 0; }
+        .section-title {
+            text-align: center;
+            font-size: 2.6rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .sdg-main-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.85rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(27, 94, 32, 0.3);
+        }
+        .btn:hover {
+            background: #2E7D32;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(27, 94, 32, 0.4);
+        }
+
+        #about {
+            position: relative;
+            overflow: hidden;
+            min-height: 680px;
+        }
+        .about-background {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            z-index: 1;
+        }
+        .about-background.active {
+            opacity: 1;
+        }
+        .about-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.52);
+            z-index: 2;
+        }
+        .about-content {
+            position: relative;
+            z-index: 3;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .partnership-logos {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .partnership-logos img {
+            height: 95px;
+            width: 95px;
+            object-fit: contain;
+        }
+        .rce-logo {
+            border-radius: 50%;
+            border: 4px solid #1B5E20;
+            padding: 5px;
+            background: white;
+        }
+        .partner-x {
+            font-size: 2.4rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .about-text {
+            color: white;
+            font-size: 1.18rem;
+            line-height: 1.85;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.75);
+        }
+
+        .full-sdg-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 40px auto 0;
+            display: block;
+        }
+
+        #map { height: 520px; border-radius: 15px; border: 5px solid var(--primary); }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+        }
+        .global-rce {
+            max-width: 260px;
+            margin: 30px 40px 20px auto;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.95rem;
+        }
+
+        /* =============== MOBILE RESPONSIVENESS =============== */
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 85vh !important;
+                padding-top: 90px;
+            }
+            .hero-title {
+                font-size: 2.7rem !important;
+            }
+            .hero-subtitle {
+                font-size: 1.55rem !important;
+            }
+            .hero-tagline {
+                font-size: 1.15rem !important;
+            }
+            .hero-logo {
+                width: 165px !important;
+                height: 165px !important;
+            }
+            #map {
+                height: 380px !important;
+            }
+            .nav-links a {
+                margin-left: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="GRM.jpeg" alt="RCE Greater Masaka Logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="research.html">Research</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero with Circular GRM Logo -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" data-aos="fade-up">RCE</h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">GREATER MASAKA</p>
+            <p class="hero-tagline" data-aos="fade-up" data-aos-delay="300">Regional Centre of Expertise on Education for Sustainable Development</p>
+            
+            <img src="GRM.jpeg" alt="RCE Greater Masaka" class="hero-logo" data-aos="fade-up" data-aos-delay="400">
+        </div>
+    </section>
+
+    <!-- About Us Section on Homepage -->
+    <section id="about">
+        <div class="about-background active" style="background-image: url('AURA.jpeg');"></div>
+        <div class="about-background" style="background-image: url('G3.jpeg');"></div>
+        <div class="about-background" style="background-image: url('K1.jpeg');"></div>
+        <div class="about-background" style="background-image: url('GC1.jpg');"></div>
+        <div class="about-background" style="background-image: url('GC4.jpg');"></div>
+        <div class="about-background" style="background-image: url('KAYNELA1.jpeg');"></div>
+        <div class="about-background" style="background-image: url('20181013-IMG_1234.jpg');"></div>
+        <div class="about-background" style="background-image: url('20181013-IMG_1671.jpg');"></div>
+
+        <div class="about-overlay"></div>
+
+        <div class="about-content" data-aos="fade-up">
+            <h2 class="section-title" style="color:white; text-align:center; margin-bottom:40px;">About Us</h2>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center;">
+                <div class="about-text">
+                    <div style="text-align: center; margin-bottom: 35px;">
+                        <div class="partnership-logos">
+                            <img src="GRM.jpeg" alt="RCE Greater Masaka" class="rce-logo">
+                            <span class="partner-x">×</span>
+                            <img src="umu.png" alt="Uganda Martyrs University">
+                        </div>
+                    </div>
+                    
+                    <p><strong>Established in 2016</strong> and officially hosted by Uganda Martyrs University Nkozi, RCE Greater Masaka is a prestigious United Nations University (UNU-IAS) acknowledged Regional Centre of Expertise dedicated to advancing Education for Sustainable Development.</p>
+                    
+                    <p>Spanning <strong>13 districts</strong> across the South-Eastern Lake Victoria Crescent — including Bukomansimbi, Butambala, Gomba, Kalangala, Kalungu, Kyotera, Lwengo, Lyantonde, Masaka, Mityana, Mpigi, Rakai, and Ssembabule — we bridge academic excellence with community action.</p>
+                    
+                    <p>Through collaboration with NEMA, Nature Uganda, SIDA, UMUWEC and other partners, we are spearheading Education for Sustainable Development in this region of the Pearl of Africa.</p>
+                </div>
+            </div>
+
+            <!-- Learn More Button -->
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="about.html" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Updated SDG Section -->
+    <section>
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; text-align: center;">
+            <h2 class="sdg-main-heading" data-aos="fade-up">
+                GMARCE: Igniting Sustainable Change Through the Power of Education
+            </h2>
+            
+            <div class="sdg-wheel-container" data-aos="zoom-in" style="margin: 40px auto;">
+                <img src="sdgwheel.png" alt="SDG Wheel">
+                <div class="sdg-wheel-text">RCE GREATER MASAKA</div>
+            </div>
+
+            <!-- Full SDG Image -->
+            <img src="sdgs.webp" alt="The Global Goals for Sustainable Development" class="full-sdg-image" data-aos="fade-up">
+        </div>
+    </section>
+
+    <section style="background:#f8f9fa;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h2 class="section-title" data-aos="fade-up">Our Region</h2>
+            <p style="text-align:center; margin-bottom:30px;" data-aos="fade-up">13 districts of the RCE coverage</p>
+            <div id="map" data-aos="fade-up"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; padding: 0 20px;">
+            <div>
+                <h3 style="color: var(--gold);">CONTACT US</h3>
+                <p><strong>Br. Aloysius Byaruhanga</strong><br>Main RCE Contact</p>
+                <p><a href="mailto:aloysiusbyaruhanga49@gmail.com" style="color:#ddd;">aloysiusbyaruhanga49@gmail.com</a></p>
+                
+                <p style="margin-top:15px;"><strong>Dr. Kanyesigye Charles</strong><br>Secondary RCE Contact</p>
+                <p><a href="mailto:kanyesigyecharles@yahoo.com" style="color:#ddd;">kanyesigyecharles@yahoo.com</a></p>
+                
+                <p style="margin-top:15px;"><strong>Isaac Ntale</strong><br>Student Coordinator</p>
+                <p><a href="mailto:isaacntale007@gmail.com" style="color:#ddd;">isaacntale007@gmail.com</a></p>
+            </div>
+
+            <div>
+                <h3 style="color: var(--gold);">NAVIGATION</h3>
+                <a href="index.html" style="color:#ddd; display:block; margin:8px 0;">Home</a>
+                <a href="about.html" style="color:#ddd; display:block; margin:8px 0;">About Us</a>
+                <a href="gallery.html" style="color:#ddd; display:block; margin:8px 0;">Gallery</a>
+                <a href="research.html" style="color:#ddd; display:block; margin:8px 0;">Research</a>
+                <a href="partners.html" style="color:#ddd; display:block; margin:8px 0;">Partners</a>
+                <a href="contact.html" style="color:#ddd; display:block; margin:8px 0;">Contact Us</a>
+            </div>
+
+            <div>
+                <h3 style="color: var(--gold);">ADDITIONAL LINKS</h3>
+                <a href="https://share.google/Kr1u1ZKamUgQd4eQj" target="_blank" style="color:#ddd; display:block; margin:8px 0;">RCE Global</a>
+                <a href="https://globalgoals.org/" target="_blank" style="color:#ddd; display:block; margin:8px 0;">Global Goals for Sustainable Development</a>
+                <a href="https://x.com/RCE_GreaterNai?s=20" target="_blank" style="color:#ddd; display:block; margin:8px 0;">RCE Greater Nairobi</a>
+                <a href="https://rcega.org/" target="_blank" style="color:#ddd; display:block; margin:8px 0;">RCE Greater Atlanta</a>
+            </div>
+        </div>
+
+        <div style="text-align: right; margin: 30px 40px 20px 0;">
+            <img src="RCE GLOBAL.png" alt="RCE Global Network" class="global-rce">
+        </div>
+
+        <div class="footer-bottom">
+            <img src="umu.png" alt="Uganda Martyrs University" class="umu-logo" style="height: 55px;">
+            <p><strong>RCE GREATER MASAKA</strong> — Hosted by Uganda Martyrs University Nkozi</p>
+            <p>&copy; 2026 | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        let aboutSlides = document.querySelectorAll('#about .about-background');
+        let current = 0;
+
+        function fadeNext() {
+            aboutSlides[current].classList.remove('active');
+            current = (current + 1) % aboutSlides.length;
+            aboutSlides[current].classList.add('active');
+        }
+
+        setInterval(fadeNext, 5500);
+
+        var map = L.map('map').setView([-0.50, 31.90], 9);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        L.marker([-0.0036, 32.0144]).addTo(map)
+            .bindPopup("<b>Uganda Martyrs University Nkozi</b><br>Host of RCE Greater Masaka")
+            .openPopup();
+
+        var boundary = [
+            [0.05, 31.40], [0.10, 32.40],
+            [-0.30, 32.60], [-0.90, 32.45],
+            [-1.20, 31.75], [-1.10, 31.05],
+            [-0.60, 31.00], [-0.20, 31.20],
+            [0.05, 31.40]
+        ];
+        L.polyline(boundary, {color: '#1B5E20', weight: 7, opacity: 0.9}).addTo(map);
+    </script>
+</body>
+</html>

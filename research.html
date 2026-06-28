@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Greater Masaka | Research & Publications</title>
+    <link rel="icon" type="image/png" href="GRM.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --gold: #FFD600;
+            --dark: #1E3A2F;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            color: #333; 
+        }
+        nav {
+            background: var(--primary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { 
+            height: 75px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            object-fit: contain;
+            background: white;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        .main-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('G11.jpeg') center/cover no-repeat;
+            color: white;
+        }
+
+        .hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding-top: 40px;
+        }
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            z-index: 2;
+        }
+        .hero-title {
+            font-size: 3.6rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+            text-shadow: 0 6px 20px rgba(0,0,0,0.8);
+        }
+
+        .separator {
+            height: 40px;
+            background: transparent;
+            position: relative;
+        }
+        .separator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            right: 8%;
+            height: 2px;
+            background: #1B5E20;
+            opacity: 0.6;
+        }
+
+        .research-content {
+            padding: 90px 0 100px;
+        }
+
+        .research-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+        }
+        .research-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transition: 0.4s;
+            color: #333;
+        }
+        .research-card:hover { transform: translateY(-10px); }
+        .research-card h3 {
+            color: var(--primary);
+            padding: 20px 25px 10px;
+        }
+        .research-card p {
+            padding: 0 25px 25px;
+            color: #555;
+        }
+        .research-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+        .btn {
+            display: inline-block;
+            margin: 0 25px 25px;
+            padding: 12px 30px;
+            background: var(--gold);
+            color: #000;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        /* =============== MOBILE RESPONSIVENESS =============== */
+        @media (max-width: 768px) {
+            .hero {
+                height: 55vh !important;
+                min-height: 420px;
+            }
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+            .research-grid {
+                grid-template-columns: 1fr !important;
+                gap: 25px;
+            }
+            .research-card img {
+                height: 200px !important;
+            }
+            .research-content {
+                padding: 60px 0 70px;
+            }
+            .nav-links a {
+                margin-left: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="GRM.jpeg" alt="RCE Greater Masaka">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="research.html">Research</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Section with G11 Background -->
+    <div class="main-section">
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 class="hero-title">Research, Publications & Impacts</h1>
+                <p style="font-size:1.4rem;">Advancing Education for Sustainable Development through Knowledge and Action</p>
+            </div>
+        </section>
+
+        <!-- Simple Thin Black Straight Line Separator -->
+        <div class="separator"></div>
+
+        <!-- Research Content -->
+        <section class="research-content">
+            <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+                
+                <div class="research-grid">
+
+                    <!-- Green Campus -->
+                    <div class="research-card" data-aos="fade-up">
+                        <img src="G14.jpeg" alt="Green Campus at UMU">
+                        <h3>🌱 Green Campus Initiative</h3>
+                        <p>Uganda Martyrs University is widely <a href="https://ir.umu.ac.ug/handle/20.500.12280/426" target="_blank" style="color:var(--primary); text-decoration:underline;">recognised by</a> the <strong><a href="https://www.nema.go.ug/en/" target="_blank" style="color:var(--primary); text-decoration:underline;">NEMA</a></strong> as one of the greenest university campuses in Uganda. The university has implemented tree planting, waste management, solar energy, and rainwater harvesting initiatives.</p>
+                        <p>RCE Greater Masaka actively supports and promotes these efforts as part of its mandate to mainstream Education for Sustainable Development (ESD).</p>
+                        <a href="https://sdgs.un.org/partnerships/green-campus-inititiative" target="_blank" class="btn">Learn More →</a>
+                    </div>
+
+                    <!-- Stewards Paper -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="100">
+                        <img src="KAYNELA2.jpeg" alt="Sustainable Agriculture at Kayinera Farm">
+                        <h3>Stewards of the Natural Environmental Resources</h3>
+                        <p>Paper by <strong>J. M. M. Kamweri (2015)</strong> presented at Duquesne University, USA. It highlights the role of faith-based institutions like Uganda Martyrs University and the Association of Religious in Uganda in environmental stewardship and restorative justice.</p>
+                        <a href="https://ir.umu.ac.ug/items/4469a42f-ab97-497a-9caa-baa2c260d4e5" target="_blank" class="btn">Read Paper →</a>
+                    </div>
+
+                    <!-- Mainstreaming ESD -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="200">
+                        <img src="G4.jpeg" alt="Welcome to UMU">
+                        <h3>Mainstreaming ESD at Uganda Martyrs University</h3>
+                        <p>Critical analysis by Jimmy Spire Ssentongo & Aloysius Byaruhanga on how UMU integrates sustainable development into its academic programmes, research, and community engagement.</p>
+                        <a href="https://www.researchgate.net/publication/309865858_Mainstreaming_Education_for_Sustainable_Development_in_Uganda_Martyrs_University_A_critical_analysis_of_the_strategy" target="_blank" class="btn">Access Full Text →</a>
+                    </div>
+
+                    <!-- SIDA Partnership -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="300">
+                        <img src="SIDA.png" alt="SIDA Partnership">
+                        <h3>SIDA – UMU Partnership</h3>
+                        <p>SIDA has supported Uganda Martyrs University through various programmes focused on higher education, research capacity building, and sustainable development. This partnership strengthens RCE Greater Masaka’s work in the region.</p>
+                        <a href="https://sida.se/en/sidas-international-work/countries-and-regions/uganda" target="_blank" class="btn">SIDA Uganda →</a>
+                    </div>
+
+                    <!-- Global RCE Roadmap -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="400">
+                        <img src="ROADMAP.png" alt="RCE Roadmap">
+                        <h3>Global RCE Roadmap 2021–2030</h3>
+                        <p>Official strategic document guiding all RCEs, including Greater Masaka, toward achieving the 2030 Agenda.</p>
+                        <a href="https://unu.edu/sites/default/files/2025-02/RCE_Roadmap_Web_FINAL.pdf" target="_blank" class="btn">Download PDF →</a>
+                    </div>
+
+                    <!-- RCE Contribution -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="500">
+                        <img src="2030.jpg" alt="Agenda 2030">
+                        <h3>Contributions to RCE 2030 Agenda</h3>
+                        <p>RCE Greater Masaka contributes to the global 2030 Agenda for Sustainable Development through local action, education, community engagement, and youth empowerment in the Greater Masaka region.</p>
+                        <a href="https://www.researchgate.net/publication/334723067_The_contribution_of_Regional_Centers_of_Expertise_for_the_implementation_of_the_2030_Agenda_for_Sustainable_Development" target="_blank" class="btn">Learn More →</a>
+                    </div>
+
+                    <!-- Student Leadership -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="600">
+                        <img src="P4.jpeg" alt="RCE Students on Sustainable Tour">
+                        <h3>Student Leadership & Youth Advocacy</h3>
+                        <p>Through RCE Greater Masaka, students from Uganda Martyrs University have become spearheaders in advocacy against environmental degradation. Their notable works include the ArcGIS Story on Katonga wetland threats, a Writing Competition to inspire conservation, and active participation in Sustainable Tours and field practicals.</p>
+                        <p>These initiatives continue to drive youth-led conservation in the region.</p>
+                        <a href="https://x.com/NtaleIsaac007" target="_blank" class="btn">Follow on X →</a>
+                    </div>
+
+                    <!-- Equator Greenbelt -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="700">
+                        <img src="G6.jpeg" alt="Equator Greenbelt">
+                        <h3>Equator Greenbelt Initiative</h3>
+                        <p>RCE Greater Masaka is part of the Equator Greenbelt movement that aims to green the Equator line across 13 districts in the Greater Masaka region. The project focuses on planting and preserving indigenous tree species to restore biodiversity and fight climate change.</p>
+                        <a href="https://x.com/NtaleIsaac007" target="_blank" class="btn">Follow Progress on X →</a>
+                    </div>
+
+                    <!-- DALILA Project -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="750">
+                        <img src="DALILA.png" alt="DALILA Project">
+                        <h3>DALILA Project</h3>
+                        <p>The DALILA Project (Development of New Academic Curricula on Sustainable Energies and Green Economy in Africa) is an EU-funded Erasmus+ initiative aimed at bridging the gap between academia and the labour market in renewable energy and green business.</p>
+                        <p>Uganda Martyrs University is an active partner in this project, with activities spearheaded by RCE Greater Masaka and mainly undertaken at the Fort Portal Campus (Engineering School).</p>
+                        <a href="https://www.climate-chance.org/en/best-pratices/dalila-development-of-new-academic-curricula-on-sustainable-energies-and-green-economy-in-africa/" target="_blank" class="btn">Learn More →</a>
+                    </div>
+
+                    <!-- Resources & Downloads -->
+                    <div class="research-card" data-aos="fade-up" data-aos-delay="800">
+                        <h3>📥 Resources & Downloads</h3>
+                        <p style="padding: 0 25px 20px;">Download key documents related to RCE Greater Masaka and our initiatives.</p>
+                        
+                        <ul style="padding: 0 25px 25px; list-style: none;">
+                            <li style="margin: 10px 0;">
+                                <a href="BID TO HOST RCE GLOBAL CONFERENCE 2025 v1.0.pdf" download class="btn" style="background:#1B5E20; color:white; width:100%; text-align:center; display:block;">
+                                    ↓ Bid to Host 14th Global RCE Conference 2025
+                                </a>
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <a href="Greener Campus Innitiative- Project Brief (1).pdf" download class="btn" style="background:#1B5E20; color:white; width:100%; text-align:center; display:block;">
+                                    ↓ Greener Campus Initiative - Project Brief
+                                </a>
+                            </li>
+                            <li style="margin: 10px 0;">
+                                <a href="RCE APPLICATION DOCUMENT.pdf" download class="btn" style="background:#1B5E20; color:white; width:100%; text-align:center; display:block;">
+                                    ↓ RCE Greater Masaka Establishment Application
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p><strong>RCE GREATER MASAKA</strong> — Hosted by Uganda Martyrs University Nkozi</p>
+        <p>&copy; 2026 | All Rights Reserved</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

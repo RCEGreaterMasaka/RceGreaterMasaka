@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Greater Masaka | Gallery</title>
+    <link rel="icon" type="image/png" href="AURA.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;900&family=Aguafina+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --gold: #FFD600;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            color: #333; 
+            background: #f8f9fa;
+        }
+        nav {
+            background: var(--primary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { 
+            height: 75px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            object-fit: contain;
+            background: white;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+
+        /* Hero Section - Kept Exactly As It Was */
+        .hero {
+            height: 65vh;
+            background: url('D2.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.45);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-family: 'Aguafina Script', cursive;
+            font-size: 3.4rem;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-shadow: 0 6px 20px rgba(0,0,0,0.7);
+            margin-bottom: 12px;
+        }
+        .hero .subtitle {
+            font-size: 1.45rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-top: 10px;
+        }
+
+        .gallery-section {
+            background: #0a0f0c;
+            padding: 60px 0 80px;
+        }
+
+        .gallery-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(27,94,32,0.35);
+        }
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .gallery-item:hover img, .gallery-item:hover video {
+            transform: scale(1.08);
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.92));
+            color: white;
+            padding: 30px 20px 20px;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.97);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        .lightbox-content img, .lightbox-content video {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
+        }
+        .back-to-gallery { 
+            top: 25px; 
+            left: 30px; 
+            font-size: 2.4rem; 
+        }
+        .close-btn {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-size: 2.8rem;
+            color: white;
+            cursor: pointer;
+            z-index: 2010;
+        }
+        .prev { left: -70px; top: 50%; transform: translateY(-50%); font-size: 2.8rem; }
+        .next { right: -70px; top: 50%; transform: translateY(-50%); font-size: 2.8rem; }
+
+        /* =============== MOBILE RESPONSIVENESS =============== */
+        @media (max-width: 768px) {
+            .hero {
+                height: 55vh !important;
+            }
+            .hero h1 {
+                font-size: 2.4rem !important;
+            }
+            .hero .subtitle {
+                font-size: 1.15rem !important;
+            }
+            .gallery-item img,
+            .gallery-item video {
+                height: 230px !important;
+            }
+            .caption {
+                padding: 20px 15px 15px;
+                font-size: 0.9rem;
+            }
+            .prev, .next {
+                font-size: 2.2rem;
+            }
+            .nav-links a {
+                margin-left: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="GRM.jpeg" alt="RCE Greater Masaka">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="research.html">Research</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Kept Exactly As It Was -->
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>From Challenges to Green Solutions</h1>
+            <p class="subtitle">Our Story • Our Journey • Our Impact</p>
+        </div>
+    </section>
+
+    <!-- Dark Gallery Section -->
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <!-- Previous Items (unchanged) -->
+            <div class="gallery-item" onclick="openLightbox(0)">
+                <img src="KATONGA1.jpeg" alt="Katonga River">
+                <div class="caption">Katonga River — a vital feeder of Lake Victoria facing severe anthropogenic threats</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(1)">
+                <img src="SWAMP1.jpeg" alt="Silting">
+                <div class="caption">Silting of swamps around Katonga due to overdue bridge construction</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(2)">
+                <img src="BRIDGE1.jpeg" alt="Bridge">
+                <div class="caption">Katonga River Bridge — ecological concerns from prolonged construction</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(3)">
+                <img src="UMUWEC.jpeg" alt="UMUWEC">
+                <div class="caption">Uganda Martyrs University Wildlife & Environment Club (UMUWEC) students in action</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(4)">
+                <img src="EQUATOR.jpeg" alt="Equator">
+                <div class="caption">Students at the Equator Monument during sustainability tours</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(5)">
+                <img src="KAYNELA1.jpeg" alt="Sustainable Tour">
+                <div class="caption">Field visits showcasing sustainable agriculture at Kayinera Farm</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(6)">
+                <img src="E1.jpeg" alt="2009 ESD Workshop">
+                <div class="caption">2009 Workshop: Situation Analysis of Education for Sustainable Development at UMU</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(7)">
+                <img src="E2.jpeg" alt="World Environment Day 2024">
+                <div class="caption">World Environment Day 2024 Celebration at UMU – Land Restoration for Climate Resilience</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(8)">
+                <img src="E3.jpeg" alt="Speakers at Environment Day">
+                <div class="caption">NEMA and University officials addressing students during World Environment Day 2024</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(9)">
+                <img src="E6.jpeg" alt="Tree Planting">
+                <div class="caption">Tree planting during World Environment Day 2024 – contributing to the Equator Greenbelt Initiative</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(10)">
+                <img src="E4.jpeg" alt="RCE Recognition Award">
+                <div class="caption">2017 RCE Recognition Award for the Lake Victoria Catchment Environmental Education Project</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(11)">
+                <img src="E5.jpeg" alt="UNU Acknowledgement">
+                <div class="caption">Certificate of Acknowledgement from United Nations University (UNU-IAS) to RCE Greater Masaka</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(12)">
+                <img src="G3.jpeg" alt="Campus Path">
+                <div class="caption">Beautiful green pathways at Uganda Martyrs University Nkozi Campus</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(13)">
+                <img src="G4.jpeg" alt="UMU Welcome">
+                <div class="caption">Welcome to UMU — A Place of Love & Sustainability</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(14)">
+                <img src="G8.jpeg" alt="Law Faculty">
+                <div class="caption">Law Faculty Building with thriving palm tree — part of the green campus initiative</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(15)">
+                <img src="G11.jpeg" alt="Indigenous Tree">
+                <div class="caption">One of the early indigenous trees planted under the Equator Greenbelt Initiative</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(16)">
+                <img src="G12.jpeg" alt="Administrative Building">
+                <div class="caption">Administrative Block with national and institutional flags — one of the oldest buildings on campus</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(17)">
+                <img src="G15.jpeg" alt="Garden & Infrastructure">
+                <div class="caption">Green landscaping around campus infrastructure — UMU inspiring sister campuses and regional partners</div>
+            </div>
+
+            <!-- Green Campus Initiative -->
+            <div class="gallery-item" onclick="openLightbox(18)">
+                <img src="GC1.jpg" alt="Green Campus Launch">
+                <div class="caption">Greener Campus Initiative Launch – Students and staff displaying reusable bags</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(19)">
+                <img src="GC2.jpg" alt="Students with Bags">
+                <div class="caption">Students proudly showcasing eco-friendly reusable shopping bags</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(20)">
+                <img src="GC3.jpg" alt="Launch Event">
+                <div class="caption">Academic Registrar and Dr. Kabiito at the official launch of the Greener Campus Initiative</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(21)">
+                <img src="GC4.jpg" alt="Students Holding Bags">
+                <div class="caption">Students holding custom-made reusable bags – promoting waste reduction</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(22)">
+                <img src="S1.jpg" alt="Sewing Bags">
+                <div class="caption">Sewing reusable bags on campus as part of the Greener Campus Initiative</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(23)">
+                <img src="S2.jpg" alt="Academic Registrar at Launch">
+                <div class="caption">Academic Registrar speaking during the Greener Campus Initiative launch</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(24)">
+                <img src="S3.jpg" alt="Sewing Process">
+                <div class="caption">Hands-on tailoring of reusable bags at the university workshop</div>
+            </div>
+
+            <!-- Newly Added Story Images -->
+            <div class="gallery-item" onclick="openLightbox(25)">
+                <img src="20181012-IMG_1005.jpg" alt="Stakeholder Meeting">
+                <div class="caption">Stakeholder meeting at UMU Nkozi Campus with NEMA, Nature Uganda, Katholische Universität Eichstätt-Ingolstadt and partners</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(26)">
+                <img src="20181012-IMG_1058.jpg" alt="Green Campus">
+                <div class="caption">Lush green environment at Uganda Martyrs University Nkozi Campus</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(27)">
+                <img src="20181013-IMG_1167.jpg" alt="Farmers">
+                <div class="caption">Local farmers transporting fresh vegetables to the market</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(28)">
+                <img src="20181013-IMG_1198.jpg" alt="School Children">
+                <div class="caption">Pupils of Uganda Martyrs’ High School Kitamba</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(29)">
+                <img src="20181013-IMG_1202.jpg" alt="Head Teacher">
+                <div class="caption">Head Teacher of Uganda Martyrs Secondary School Kitamba</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(30)">
+                <img src="20181013-IMG_1714.jpg" alt="Equator Monument">
+                <div class="caption">Visitors from Germany</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(31)">
+                <img src="20181013-IMG_1234.jpg" alt="Hope for the Young Generation">
+                <div class="caption">Hope for the young generation</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(32)">
+                <img src="20181013-IMG_1431.jpg" alt="Health Center">
+                <div class="caption">One of the health centers in the RCE</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(33)">
+                <img src="20181013-IMG_1402.jpg" alt="Thomas Schwab">
+                <div class="caption">Thomas Schwab, a visitor from RCE Greater Munich</div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(34)">
+                <img src="20181013-IMG_1594.jpg" alt="Kiganda Dance">
+                <div class="caption">Students demonstrating their traditional Kiganda dance as part of their culture</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="back-to-gallery" onclick="closeLightbox()">✕</span>
+        <span class="close-btn" onclick="closeLightbox()">✕</span>
+        <div class="lightbox-content">
+            <span class="prev" onclick="changeMedia(-1)">‹</span>
+            <img id="lightbox-image" src="" alt="">
+            <video id="lightbox-video" controls style="display:none;"></video>
+            <span class="next" onclick="changeMedia(1)">›</span>
+            <p id="lightbox-caption" style="text-align:center; margin-top:20px; color:white; font-size:1.05rem; padding:0 20px;"></p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        const mediaItems = [
+            // Original 25 items (0-24) unchanged
+            { type: 'image', src: 'KATONGA1.jpeg', caption: 'Katonga River — a vital feeder of Lake Victoria facing severe anthropogenic threats' },
+            { type: 'image', src: 'SWAMP1.jpeg', caption: 'Silting of swamps around Katonga due to overdue bridge construction' },
+            { type: 'image', src: 'BRIDGE1.jpeg', caption: 'Katonga River Bridge — ecological concerns from prolonged construction' },
+            { type: 'image', src: 'UMUWEC.jpeg', caption: 'Uganda Martyrs University Wildlife & Environment Club (UMUWEC) students in action' },
+            { type: 'image', src: 'EQUATOR.jpeg', caption: 'Students at the Equator Monument during sustainability tours' },
+            { type: 'image', src: 'KAYNELA1.jpeg', caption: 'Field visits showcasing sustainable agriculture at Kayinera Farm' },
+            { type: 'image', src: 'E1.jpeg', caption: '2009 Workshop: Situation Analysis of Education for Sustainable Development at UMU' },
+            { type: 'image', src: 'E2.jpeg', caption: 'World Environment Day 2024 Celebration at UMU – Land Restoration for Climate Resilience' },
+            { type: 'image', src: 'E3.jpeg', caption: 'NEMA and University officials addressing students during World Environment Day 2024' },
+            { type: 'image', src: 'E6.jpeg', caption: 'Tree planting during World Environment Day 2024 – contributing to the Equator Greenbelt Initiative' },
+            { type: 'image', src: 'E4.jpeg', caption: '2017 RCE Recognition Award for the Lake Victoria Catchment Environmental Education Project' },
+            { type: 'image', src: 'E5.jpeg', caption: 'Certificate of Acknowledgement from United Nations University (UNU-IAS) to RCE Greater Masaka' },
+            { type: 'image', src: 'G3.jpeg', caption: 'Beautiful green pathways at Uganda Martyrs University Nkozi Campus' },
+            { type: 'image', src: 'G4.jpeg', caption: 'Welcome to UMU — A Place of Love & Sustainability' },
+            { type: 'image', src: 'G8.jpeg', caption: 'Law Faculty Building with thriving palm tree — part of the green campus initiative' },
+            { type: 'image', src: 'G11.jpeg', caption: 'One of the early indigenous trees planted under the Equator Greenbelt Initiative' },
+            { type: 'image', src: 'G12.jpeg', caption: 'Administrative Block with national and institutional flags — one of the oldest buildings on campus' },
+            { type: 'image', src: 'G15.jpeg', caption: 'Green landscaping around campus infrastructure — UMU inspiring sister campuses and regional partners' },
+            { type: 'image', src: 'GC1.jpg', caption: 'Greener Campus Initiative Launch – Students and staff displaying reusable bags' },
+            { type: 'image', src: 'GC2.jpg', caption: 'Students proudly showcasing eco-friendly reusable shopping bags' },
+            { type: 'image', src: 'GC3.jpg', caption: 'Academic Registrar and Dr. Kabiito at the official launch of the Greener Campus Initiative' },
+            { type: 'image', src: 'GC4.jpg', caption: 'Students holding custom-made reusable bags – promoting waste reduction' },
+            { type: 'image', src: 'S1.jpg', caption: 'Sewing reusable bags on campus as part of the Greener Campus Initiative' },
+            { type: 'image', src: 'S2.jpg', caption: 'Academic Registrar speaking during the Greener Campus Initiative launch' },
+            { type: 'image', src: 'S3.jpg', caption: 'Hands-on tailoring of reusable bags at the university workshop' },
+
+            // Corrected New Images
+            { type: 'image', src: '20181012-IMG_1005.jpg', caption: 'Stakeholder meeting at UMU Nkozi Campus with NEMA, Nature Uganda, Katholische Universität Eichstätt-Ingolstadt and partners' },
+            { type: 'image', src: '20181012-IMG_1058.jpg', caption: 'Lush green environment at Uganda Martyrs University Nkozi Campus' },
+            { type: 'image', src: '20181013-IMG_1167.jpg', caption: 'Local farmers transporting fresh vegetables to the market' },
+            { type: 'image', src: '20181013-IMG_1198.jpg', caption: 'Pupils of Uganda Martyrs’ High School Kitamba' },
+            { type: 'image', src: '20181013-IMG_1202.jpg', caption: 'Head Teacher of Uganda Martyrs Secondary School Kitamba' },
+            { type: 'image', src: '20181013-IMG_1714.jpg', caption: 'Visitors from Germany' },
+            { type: 'image', src: '20181013-IMG_1234.jpg', caption: 'Hope for the young generation' },
+            { type: 'image', src: '20181013-IMG_1431.jpg', caption: 'One of the health centers in the RCE' },
+            { type: 'image', src: '20181013-IMG_1402.jpg', caption: 'Thomas Schwab, a visitor from RCE Greater Munich' },
+            { type: 'image', src: '20181013-IMG_1594.jpg', caption: 'Students demonstrating their traditional Kiganda dance as part of their culture' }
+        ];
+
+        let currentIndex = 0;
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const item = mediaItems[index];
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-image');
+            const video = document.getElementById('lightbox-video');
+            const captionEl = document.getElementById('lightbox-caption');
+
+            if (item.type === 'image') {
+                img.src = item.src;
+                img.style.display = 'block';
+                video.style.display = 'none';
+                video.pause();
+            } else {
+                video.src = item.src;
+                video.style.display = 'block';
+                img.style.display = 'none';
+                video.play();
+            }
+            captionEl.textContent = item.caption;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const video = document.getElementById('lightbox-video');
+            lightbox.style.display = 'none';
+            video.pause();
+        }
+
+        function changeMedia(direction) {
+            currentIndex = (currentIndex + direction + mediaItems.length) % mediaItems.length;
+            openLightbox(currentIndex);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") closeLightbox();
+        });
+    </script>
+</body>
+</html>

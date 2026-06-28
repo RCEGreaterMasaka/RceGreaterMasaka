@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Greater Masaka | About Us</title>
+    
+    <link rel="icon" type="image/png" href="GRM.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --gold: #FFD600;
+            --dark: #1E3A2F;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.8; 
+            color: #333; 
+        }
+
+        nav {
+            background: var(--primary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { 
+            height: 75px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            object-fit: contain;
+            background: white;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* Hero - D1.jpg with full visibility of all faces */
+        .hero {
+            height: 98vh;
+            min-height: 750px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.45)), 
+                        url('D1.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+        .hero p {
+            font-size: 1.45rem;
+            max-width: 720px;
+            margin: 0 auto;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.7);
+        }
+
+        /* GRM Logo on Left Side */
+        .hero-logo {
+            position: absolute;
+            left: 8%;
+            top: 48%;
+            transform: translateY(-50%);
+            width: 205px;
+            z-index: 3;
+            opacity: 0.95;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+        }
+
+        section { padding: 85px 20px; }
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.65rem;
+            color: var(--primary);
+            margin-bottom: 40px;
+        }
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 55px;
+            align-items: start;
+        }
+        .about-grid img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        /* =============== MOBILE RESPONSIVENESS =============== */
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh !important;
+                min-height: 520px;
+            }
+            .hero h1 {
+                font-size: 2.6rem !important;
+            }
+            .hero p {
+                font-size: 1.15rem !important;
+            }
+            .about-grid {
+                grid-template-columns: 1fr !important;
+                gap: 40px;
+            }
+            .nav-links a {
+                margin-left: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="GRM.jpeg" alt="RCE Greater Masaka Logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="research.html">Research</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero with D1.jpg -->
+    <section class="hero">
+        <img src="GRM.jpeg" alt="RCE Greater Masaka Logo" class="hero-logo">
+        
+        <div class="hero-content">
+            <h1 data-aos="fade-up">About RCE Greater Masaka</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Education for Sustainable Development • Local Action • Global Impact</p>
+        </div>
+    </section>
+
+    <div class="content">
+
+        <!-- Who We Are -->
+        <section>
+            <h2 class="section-title" data-aos="fade-up">Who We Are</h2>
+            <p data-aos="fade-up">The Regional Centre of Expertise (RCE) Greater Masaka—initially designated as GMARCE—is an international, multi-stakeholder alliance officially certified by the United Nations University Institute for the Advanced Study of Sustainability (UNU-IAS). Anchored and hosted by the Faculty of Education at Uganda Martyrs University (UMU), the center operates as a vital strategic mechanism to bridge the historical gap between advanced academic research and grass-roots community needs. By establishing cooperative networks among higher education institutions, local municipal councils, civil society organizations, schools, and private enterprises, the center works to convert global sustainability frameworks into practical, transformative local actions.</p>
+            
+            <p data-aos="fade-up">At its core, RCE Greater Masaka functions as an institutional catalyst for regional resilience and lifelong learning. Rather than viewing sustainability through a purely theoretical lens, the center targets deep-rooted socio-economic vulnerabilities, transforming communities into living laboratories for sustainable development. By prioritizing youth inclusion, civic empowerment, and cross-sector resource sharing, the network ensures that local populations are equipped with the specialized skills, values, and environmental awareness necessary to safeguard their natural heritage while simultaneously building sustainable pathways to economic prosperity.</p>
+        </section>
+
+        <!-- History -->
+        <section style="background:#f8f9fa;">
+            <h2 class="section-title" data-aos="fade-up">Our History</h2>
+            <div class="about-grid" data-aos="fade-up">
+                <div>
+                    <p>The origin of RCE Greater Masaka traces back to an intense realization within the academic community at Uganda Martyrs University that traditional, conventional educational pathways were ignoring critical regional development and ecological crises. This structural mismatch culminated in a comprehensive Education for Sustainable Development (ESD) Situation Analysis and foundational workshop held at the UMU campus on April 15, 2009. Spearheaded by core visionaries such as Brother Byaruhanga Aloysius, J.S. Ssentongo, and George Kyaboona, and supported by key national environmental leaders from NEMA and UNESCO, this baseline audit scrutinized the university's institutional practices and mapped out the initial paths required to integrate sustainability principles deeply into active curriculum pedagogy and community outreach.</p>
+                    
+                    <p>Building upon the momentum of this initial situational assessment, the network officially crystallized during a landmark multi-sectoral stakeholder assembly convened at Uganda Martyrs University on July 11, 2013. This pivotal forum unified over 40 highly diverse delegates representing local municipal governments, regional primary and secondary school administrators, civil society groups, and private industry leaders. Facilitated by UMU’s Faculty of Education, the steering committee comprehensively debated and prioritized the severe ecological challenges crippling the sub-region—ranging from rampant land degradation to the loss of indigenous knowledge. This collective civic mobilization formed the structural backbone of the formal application submitted to the United Nations University in April 2014 under the leadership of Vice-Chancellor Prof. Dr. Charles L.M. Olweny and Dean Brother Aloysius Byaruhanga.</p>
+                </div>
+                <div>
+                    <img src="AURA.jpeg" alt="RCE Greater Masaka">
+                </div>
+            </div>
+        </section>
+
+        <!-- Location -->
+        <section>
+            <h2 class="section-title" data-aos="fade-up">Location & Scope</h2>
+            <div class="about-grid" data-aos="fade-up">
+                <div>
+                    <p>RCE Greater Masaka operates strategically astride the equator within the crucial South-Eastern Lake Victoria crescent basin of East Africa. The physical epicenter and administrative headquarters of the network are hosted at the Uganda Martyrs University Nkozi Campus, situated along the primary Kampala-Masaka Highway exactly 82 kilometers southwest of the capital city. The surrounding basin defines the operational landscape for the network’s sustainability initiatives, offering a dynamic geographical mix of freshwater satellite lakes, river systems, and extensive wetlands. The center aligns its boundaries to target localized ecological hotspots facing severe environmental degradation across an interconnected grid of 13 districts, managing a territory that encompasses major natural resource landmarks, including the protected global Ramsar wetland systems of Nabajjuzi, Mabamba, Sango Bay, and Lutembe Bay, as well as the critically endangered forest reserves of Mpanga and Kalangala.</p>
+                    
+                    <p>Demographically, the center addresses the pressing socio-economic needs of a rapidly expanding population of over 5 million citizens within these 13 districts. The sub-region is characterized by a profound human dependency level, with approximately 65% of the entire population under the age of 25, alongside a historically low average life expectancy below 48 years. The vast majority of these communities rely directly on the health of the surrounding water tables, fisheries, and soils, with roughly 75% of households subsisting on small agricultural holdings of one hectare or less.</p>
+                </div>
+                <div>
+                    <img src="KAYNELA1.jpeg" alt="Greater Masaka Region">
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Initiatives -->
+        <section style="background:#f8f9fa;">
+            <h2 class="section-title" data-aos="fade-up">Our Key Works and Initiatives</h2>
+            <div class="about-grid" data-aos="fade-up">
+                <div>
+                    <p>The primary operational works of RCE Greater Masaka are organized around a series of highly specialized, thematic Technical Working Groups designed to mitigate severe environmental degradation and reverse regional biodiversity losses. A critical area of focus centers on aggressive reforestation and watershed management within the fragile Lake Victoria Basin. Over the past several decades, expanding commercial ventures—such as the massive oil palm plantations in Kalangala—have cleared large swaths of virgin forests and swamp vegetation, resulting in altered microclimates and severe soil nutrient depletion. The RCE actively counters this ecological damage by leading community-driven indigenous tree planting campaigns, restoring degraded wetlands, and enforcing strict buffer-zone protection protocols to protect the region's essential water towers and prevent devastating agricultural chemical runoff.</p>
+                    
+                    <p>In tandem with its landscape restoration efforts, the center works extensively to transform local agricultural systems and secure regional food safety. Because the vast majority of the population relies heavily on smallholder farming, declining soil productivity severely threatens local livelihoods. The RCE resolves this vulnerability by researching, documenting, and protecting invaluable indigenous farming knowledge and combining it with modern organic agriculture techniques. By teaching smallholder farmers agroforestry methods, organic composting, and climate-resilient crop rotation, the center helps local families restore organic matter to compacted soils, improve rainwater infiltration, and boost crop yields without depending on harmful, expensive synthetic chemicals.</p>
+                    
+                    <p>Addressing the critical intersections of energy scarcity and waste management constitutes another vital branch of the center's field actions. Across the sub-region, over 90% of households rely almost exclusively on biomass wood fuel to meet their daily domestic energy demands, a practice that accelerates regional deforestation and disproportionately burdens women and young girls. The RCE combats this energy crisis by engineering and distributing affordable, eco-friendly alternative energy technologies, specifically focusing on household biogas units, solar power conversions, and fuel-efficient cookstoves. Concurrently, the center tackles heavy municipal waste build-up in expanding urban centers and promotes health and sanitation in rural villages by setting up organized waste-sorting schemes and teaching communities how to convert organic garbage into valuable agricultural compost.</p>
+                </div>
+                <div>
+                    <img src="GC4.jpg" alt="Greener Campus Initiative">
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <img src="umu.png" alt="Uganda Martyrs University" style="height: 55px;">
+            <p><strong>RCE GREATER MASAKA</strong> — Hosted by Uganda Martyrs University Nkozi</p>
+            <p>&copy; 2026 | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>

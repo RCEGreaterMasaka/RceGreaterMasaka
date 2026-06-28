@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE Greater Masaka | Strategic Network</title>
+    <link rel="icon" type="image/png" href="GRM.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+    
+    <style>
+        :root {
+            --primary: #1B5E20;
+            --gold: #FFD600;
+            --dark: #1E3A2F;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.7; 
+            color: #333; 
+        }
+
+        nav {
+            background: var(--primary);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo img { 
+            height: 75px; 
+            border-radius: 50%; 
+            border: 3px solid white; 
+            object-fit: contain;
+            background: white;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold); }
+
+        /* Updated Hero with new background image */
+        .hero {
+            height: 85vh;
+            background: url('20181012-IMG_1005.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            text-shadow: 0 6px 20px rgba(0,0,0,0.9);
+            margin-bottom: 25px;
+        }
+        .hero p {
+            font-size: 1.35rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-shadow: 0 3px 12px rgba(0,0,0,0.85);
+            line-height: 1.8;
+        }
+
+        section { padding: 100px 0; }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .partner-category {
+            background: rgba(255,255,255,0.95);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+        .partner-category h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+        }
+        .partner-list {
+            list-style: none;
+        }
+        .partner-list li {
+            margin: 10px 0;
+            font-size: 1.05rem;
+        }
+        .partner-list a {
+            color: #1B5E20;
+            text-decoration: none;
+        }
+        .partner-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* =============== MOBILE RESPONSIVENESS =============== */
+        @media (max-width: 768px) {
+            .hero {
+                height: 70vh !important;
+                min-height: 520px;
+            }
+            .hero h1 {
+                font-size: 2.6rem !important;
+            }
+            .hero p {
+                font-size: 1.15rem !important;
+            }
+            .partners-grid {
+                grid-template-columns: 1fr !important;
+                gap: 25px;
+            }
+            .partner-category {
+                padding: 25px;
+            }
+            .nav-links a {
+                margin-left: 12px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <img src="GRM.jpeg" alt="RCE Greater Masaka Logo">
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="research.html">Research</a>
+                <a href="partners.html">Partners</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with new image and intro text -->
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Strategic Network</h1>
+            <p>RCE Greater Masaka functions as an inclusive cooperative network. By linking higher learning institutions, grassroots community groups, civic schools, and environmental organizations, we effectively combine academic insights with local actions.</p>
+        </div>
+    </section>
+
+    <!-- Partners Network Section -->
+    <section class="partners-section">
+        <div class="partners-grid">
+
+            <!-- Universities -->
+            <div class="partner-category" data-aos="fade-up">
+                <h3>Universities & Tertiary Institutions</h3>
+                <ul class="partner-list">
+                    <li><a href="https://mru.ac.ug/" target="_blank">Muteesa I Royal University</a></li>
+                    <li><a href="https://unik.ac.ug/" target="_blank">University of Kisubi</a></li>
+                    <li><a href="https://nsamizi.ac.ug/" target="_blank">Nsamizi Institute of Social Development</a></li>
+                </ul>
+            </div>
+
+            <!-- Teacher Training -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="100">
+                <h3>Teacher Training Colleges</h3>
+                <ul class="partner-list">
+                    <li>Kabulasoke Core PTC</li>
+                    <li>Ndejje Core PTC</li>
+                    <li>Butiiti PTC</li>
+                    <li>Busubizi Core PTC</li>
+                </ul>
+            </div>
+
+            <!-- Secondary Schools -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="150">
+                <h3>Secondary Schools</h3>
+                <ul class="partner-list">
+                    <li><a href="https://www.sthenryskitovu.ac.ug/" target="_blank">St. Henry’s College Kitovu</a></li>
+                    <li>Bukalasa Seminary</li>
+                    <li>Kako Secondary School</li>
+                    <li>St. Mary Senior Secondary School-Nkozi</li>
+                    <li>St. Balikuddembe S. S. Mitala Maria</li>
+                    <li>Mugaga S.S. Kiganda</li>
+                    <li>St. Anthony Kayunga Secondary School</li>
+                    <li>Balibaseka Secondary School</li>
+                    <li>Kakiri Secondary School</li>
+                    <li>Blessed Sacrament Kimanya S. S.</li>
+                    <li>Sacred Heart Girls’ Centre Kalungu</li>
+                </ul>
+            </div>
+
+            <!-- Primary Schools -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="200">
+                <h3>Primary Schools</h3>
+                <ul class="partner-list">
+                    <li><a href="https://www.facebook.com/p/Blessed-sacrament-Kimanya-Primary-School-Masaka-100095004379295/" target="_blank">Blessed Sacrament Kimanya Primary School</a></li>
+                    <li>St. Paul Kitovu Primary School</li>
+                    <li>St. Augustine Kalungu Primary School</li>
+                    <li>St. Maurice Kitaasa Primary School</li>
+                    <li>Kiyimbwe Primary School</li>
+                    <li>St. Gregory Butende Primary School</li>
+                    <li>Kyalusowe Primary School</li>
+                    <li>St. Mary’s Kitooro Primary School</li>
+                    <li>Kabukolwa Primary School</li>
+                    <li>Kako Junior P/S</li>
+                    <li>Bishop Ddungu Primary School Lwengo</li>
+                    <li>Ggulama Primary School</li>
+                    <li>St. Josephat Meeru Primary School</li>
+                    <li>Kisambya P/S</li>
+                    <li>Mpara P/S</li>
+                    <li>Kiburara P/S</li>
+                    <li>Humura P/S</li>
+                    <li>Karwenyi P/S</li>
+                    <li>Nsinde P/S</li>
+                    <li>Kaihura P/S</li>
+                    <li>Rwetuha P/S</li>
+                    <li>Kiswarra P/S</li>
+                    <li>Nyarukoma P/S</li>
+                    <li>Makerere P/S Kyenjojo</li>
+                    <li>Nyakasenyi P/S</li>
+                </ul>
+            </div>
+
+            <!-- Local Governments -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="250">
+                <h3>Local Governments</h3>
+                <ul class="partner-list">
+                    <li>Mpigi District Local Government</li>
+                    <li>Masaka District Local Government</li>
+                    <li>Rakai District Local Government</li>
+                    <li>Kalangala District Local Government</li>
+                    <li>Kalungu District Local Government</li>
+                    <li>Mityana Town Council</li>
+                </ul>
+            </div>
+
+            <!-- Community & Youth Groups -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="300">
+                <h3>Community and Youth Groups</h3>
+                <ul class="partner-list">
+                    <li>Cowo Kaswa Zinda Centre CBO / Eco-tourism Centre</li>
+                    <li>Kaswa Zinda Youth CBO</li>
+                    <li>Ffe Katukole N kobazambogo Youth CBO</li>
+                    <li>Together for Development Initiative (TDI) Youth</li>
+                    <li>Kyabakuza Agritech Youth Masaka Municipality</li>
+                    <li>Kamuzinda Bakery Youth Group</li>
+                    <li>Beekeepers CBO</li>
+                    <li>Nabulago Community CBO</li>
+                    <li>Kisojo Women & Men Organic Farmers Association</li>
+                    <li>Gayaza Nabowa CBO</li>
+                </ul>
+            </div>
+
+            <!-- Health Centres -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="350">
+                <h3>Health Centres</h3>
+                <ul class="partner-list">
+                    <li><a href="https://www.nkozihospital.org/" target="_blank">Nkozi Hospital</a></li>
+                    <li><a href="https://www.masakahospital.gov.rw/" target="_blank">Masaka District Hospital</a></li>
+                </ul>
+            </div>
+
+            <!-- Key Partners -->
+            <div class="partner-category" data-aos="fade-up" data-aos-delay="400">
+                <h3>Key Partners & Ministries</h3>
+                <ul class="partner-list">
+                    <li><a href="https://www.education.go.ug/" target="_blank">Ministry of Education and Sports</a></li>
+                    <li><a href="https://health.go.ug/" target="_blank">Ministry of Health</a></li>
+                    <li><a href="https://www.agriculture.go.ug/" target="_blank">Ministry of Agriculture, Animal Industry and Fisheries</a></li>
+                    <li><a href="https://www.mwe.go.ug/" target="_blank">Ministry of Water and Environment</a></li>
+                    <li><a href="https://mglsd.go.ug/" target="_blank">Ministry of Gender, Labour and Social Development</a></li>
+                    <li><a href="https://mlhud.go.ug/" target="_blank">Ministry of Lands, Housing and Urban Development</a></li>
+                    <li><a href="https://www.nema.go.ug/" target="_blank">National Environment Management Authority (NEMA)</a></li>
+                    <li><a href="https://natureuganda.org/" target="_blank">Nature Uganda</a></li>
+                    <li><a href="https://ugandawildlife.org/" target="_blank">Uganda Wildlife Authority (UWA)</a></li>
+                    <li><a href="https://www.unep.org/" target="_blank">United Nations Environment Programme (UNEP)</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark); color: white; padding: 60px 20px 30px; text-align: center;">
+        <p><strong>RCE GREATER MASAKA</strong> — Hosted by Uganda Martyrs University Nkozi</p>
+        <p>&copy; 2026 | All Rights Reserved</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+    </script>
+</body>
+</html>
