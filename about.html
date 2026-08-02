@@ -129,26 +129,34 @@
         }
 
         /* =============== MOBILE RESPONSIVENESS =============== */
-        @media (max-width: 768px) {
-            .hero {
-                height: 70vh !important;
-                min-height: 520px;
-            }
-            .hero h1 {
-                font-size: 2.6rem !important;
-            }
-            .hero p {
-                font-size: 1.15rem !important;
-            }
-            .about-grid {
-                grid-template-columns: 1fr !important;
-                gap: 40px;
-            }
-            .nav-links a {
-                margin-left: 12px;
-                font-size: 0.95rem;
-            }
-        }
+      @media (max-width: 768px) {
+    .hero {
+        height: 70vh !important;
+        min-height: 520px;
+    }
+    .hero h1 {
+        font-size: 2.4rem !important;
+        padding: 0 15px;
+    }
+    .hero p {
+        font-size: 1.1rem !important;
+        padding: 0 15px;
+    }
+
+    /* Hide the overlapping logo on mobile */
+    .hero-logo {
+        display: none !important;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+    }
+    .nav-links a {
+        margin-left: 12px;
+        font-size: 0.95rem;
+    }
+}
     </style>
 </head>
 <body>
