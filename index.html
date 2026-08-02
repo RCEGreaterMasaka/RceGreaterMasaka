@@ -280,53 +280,119 @@
             font-size: 0.95rem;
         }
 
-        /* =============== MOBILE RESPONSIVENESS =============== */
-        @media (max-width: 768px) {
-            .hero {
-                min-height: 85vh !important;
-                padding-top: 90px;
-            }
-            .hero-title {
-                font-size: 2.7rem !important;
-            }
-            .hero-subtitle {
-                font-size: 1.55rem !important;
-            }
-            .hero-tagline {
-                font-size: 1.15rem !important;
-            }
-            .hero-logo {
-                width: 165px !important;
-                height: 165px !important;
-            }
-            #map {
-                height: 380px !important;
-            }
-            .nav-links a {
-                margin-left: 12px;
-                font-size: 0.95rem;
-            }
-        }
+       /* ========== IMPROVED MOBILE STYLES ========== */
+.menu-toggle {
+    display: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--primary);
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        margin: 12px 0;
+        font-size: 1.1rem;
+        display: block;
+    }
+
+    .hero-title {
+        font-size: 2.6rem !important;
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem !important;
+        letter-spacing: 3px;
+    }
+
+    .hero-tagline {
+        font-size: 1.1rem !important;
+    }
+
+    .hero-logo {
+        width: 150px !important;
+        height: 150px !important;
+    }
+
+    #about {
+        min-height: auto;
+        padding: 80px 0;
+    }
+
+    .about-content > div {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .sdg-main-heading {
+        font-size: 1.9rem;
+    }
+
+    #map {
+        height: 350px !important;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        gap: 30px !important;
+    }
+
+    .global-rce {
+        margin: 20px auto !important;
+    }
+}
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
     <nav>
-        <div class="nav-content">
-            <a href="index.html" class="logo">
-                <img src="GRM.jpeg" alt="RCE Greater Masaka Logo">
-            </a>
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About Us</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="research.html">Research</a>
-                <a href="partners.html">Partners</a>
-                <a href="contact.html">Contact Us</a>
-            </div>
+    <div class="nav-content">
+        <a href="index.html" class="logo">
+            <img src="GRM.jpeg" alt="RCE Greater Masaka Logo">
+        </a>
+
+        <!-- Hamburger Icon -->
+        <div class="menu-toggle" id="menu-toggle">
+            ☰
         </div>
-    </nav>
+
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="research.html">Research</a>
+            <a href="partners.html">Partners</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+</nav>
 
     <!-- Hero with Circular GRM Logo -->
     <section class="hero">
@@ -480,6 +546,13 @@
             [0.05, 31.40]
         ];
         L.polyline(boundary, {color: '#1B5E20', weight: 7, opacity: 0.9}).addTo(map);
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
     </script>
 </body>
 </html>
